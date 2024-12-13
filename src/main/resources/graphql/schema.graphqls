@@ -1,0 +1,68 @@
+
+type Query {
+    findAllChambres: [Chambre]
+    findChambreById(id: ID!): Chambre
+    findChambresByDisponibilite(disponible: Boolean!): [Chambre]
+    findAllClients: [Client]
+    findClientById(id: ID!): Client
+    findClientsByKeyword(keyword: String!): [Client]
+    findAllReservations: [Reservation]
+    findReservationById(id: ID!): Reservation
+}
+
+type Mutation {
+    createReservation(reservation: ReservationInput!): Reservation
+    updateReservation(id: ID!, reservation: ReservationInput!): Reservation
+    deleteReservation(id: ID!): Reservation
+    createChambre(chambre: ChambreInput!): Chambre
+    updateChambre(id: ID!, chambre: ChambreInput!): Chambre
+    deleteChambre(id: ID!): Chambre
+    createClient(client: ClientInput!): Client
+    updateClient(id: ID!, client: ClientInput!): Client
+    deleteClient(id: ID!): Client
+}
+
+input ChambreInput {
+    type: TypeChambre
+    prix: Float
+    disponible: Boolean
+}
+type Client {
+    id: ID
+    nom: String
+    email: String
+    tel: String
+}
+
+input ClientInput {
+    nom: String!
+    email: String!
+    tel: String!
+}
+enum TypeChambre {
+    SIMPLE
+    DOUBLE
+}
+
+type Chambre {
+    id: ID
+    type: TypeChambre
+    prix: Float
+    disponible: Boolean
+}
+type Reservation {
+    id: ID
+    client: Client
+    chambre: Chambre
+    dateDebut: String
+    dateFin: String
+    preferences: String
+}
+
+input ReservationInput {
+    clientId: ID!
+    chambreId: ID!
+    dateDebut: String!
+    dateFin: String!
+    preferences: String
+}
